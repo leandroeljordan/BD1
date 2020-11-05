@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<DIAGRAMA ID="1" TIPO="tpConceitual" UniversalUnicID="291D-3D-135-B2-9FE3-2-BA">
+<DIAGRAMA ID="1" TIPO="tpConceitual" UniversalUnicID="2857-5C-B016-DD-2275-3D-F4">
 <InfoDiagrama ID="1">
 <Versao Valor="3.2.0"/>
 <Autores/>
@@ -24,7 +24,7 @@
 <AtributosOcultos Valor=""/>
 </Entidade>
 <Entidade ID="3">
-<Bounds Height="58" Left="29" Top="337" Width="120"/>
+<Bounds Height="58" Left="29" Top="335" Width="120"/>
 <DisablePainted Valor="false"/>
 <Texto>Equipe</Texto>
 <Observacao/>
@@ -69,7 +69,7 @@
 <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
 <Ancorado Valor="false"/>
 <TamanhoAutmatico Valor="true"/>
-<Card Valor="0"/>
+<Card Valor="2"/>
 <MovimentacaoManual Valor="false"/>
 <Papel Valor=""/>
 </Cardinalidade>
@@ -88,12 +88,12 @@
 <Ligacoes PontaA="4" PontaB="3"/>
 <Pontos>
 <Ponto Left="240" Top="240"/>
-<Ponto Left="240" Top="402"/>
-<Ponto Left="101" Top="402"/>
-<Ponto Left="101" Top="392"/>
+<Ponto Left="240" Top="400"/>
+<Ponto Left="101" Top="400"/>
+<Ponto Left="101" Top="390"/>
 </Pontos>
 <Cardinalidade ID="8">
-<Bounds Height="15" Left="68" Top="402" Width="35"/>
+<Bounds Height="15" Left="68" Top="400" Width="35"/>
 <DisablePainted Valor="false"/>
 <Texto>Cardinalidade_2</Texto>
 <Observacao/>
@@ -101,7 +101,7 @@
 <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
 <Ancorado Valor="false"/>
 <TamanhoAutmatico Valor="true"/>
-<Card Valor="2"/>
+<Card Valor="0"/>
 <MovimentacaoManual Valor="false"/>
 <Papel Valor=""/>
 </Cardinalidade>

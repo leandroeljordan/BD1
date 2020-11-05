@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<DIAGRAMA ID="1" TIPO="tpConceitual" UniversalUnicID="26F-74-2C29-FD-10F8-70-DE">
+<DIAGRAMA ID="1" TIPO="tpConceitual" UniversalUnicID="73BD-E9-40CD-18-F0E9-B7-4D">
 <InfoDiagrama ID="1">
 <Versao Valor="3.2.0"/>
 <Autores/>
@@ -69,7 +69,7 @@
 <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
 <Ancorado Valor="false"/>
 <TamanhoAutmatico Valor="true"/>
-<Card Valor="2"/>
+<Card Valor="0"/>
 <MovimentacaoManual Valor="false"/>
 <Papel Valor=""/>
 </Cardinalidade>
@@ -101,7 +101,7 @@
 <Fonte Estilo="1" Nome="Arial" Tamanho="12"/>
 <Ancorado Valor="false"/>
 <TamanhoAutmatico Valor="true"/>
-<Card Valor="0"/>
+<Card Valor="2"/>
 <MovimentacaoManual Valor="false"/>
 <Papel Valor=""/>
 </Cardinalidade>
