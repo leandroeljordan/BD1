@@ -1,0 +1,44 @@
+ 	EJ_7_Script
+
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_7` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_7` ;
+CREATE TABLE IF NOT EXISTS `list_1_ej_7`.`Engenheiros` (
+  `idEngenheiros` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idEngenheiros`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_7`.`Projetos` (
+  `idProjetos` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Engenheiros_idEngenheiros` INT NOT NULL,
+  PRIMARY KEY (`idProjetos`, `Engenheiros_idEngenheiros`),
+  INDEX `fk_Projetos_Engenheiros_idx` (`Engenheiros_idEngenheiros` ASC) VISIBLE,
+  CONSTRAINT `fk_Projetos_Engenheiros`
+    FOREIGN KEY (`Engenheiros_idEngenheiros`)
+    REFERENCES `list_1_ej_7`.`Engenheiros` (`idEngenheiros`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_7`.`Funcionarios` (
+  `idFuncionarios` INT NOT NULL,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idFuncionarios`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_7`.`Trabalha` (
+  `idTrabalha` INT NOT NULL,
+  `Funcionarios_idFuncionarios` INT NOT NULL,
+  `Projetos_idProjetos` INT NOT NULL,
+  `Projetos_Engenheiros_idEngenheiros` INT NOT NULL,
+  PRIMARY KEY (`idTrabalha`),
+  INDEX `fk_Trabalha_Funcionarios1_idx` (`Funcionarios_idFuncionarios` ASC) VISIBLE,
+  INDEX `fk_Trabalha_Projetos1_idx` (`Projetos_idProjetos` ASC, `Projetos_Engenheiros_idEngenheiros` ASC) VISIBLE,
+  CONSTRAINT `fk_Trabalha_Funcionarios1`
+    FOREIGN KEY (`Funcionarios_idFuncionarios`)
+    REFERENCES `list_1_ej_7`.`Funcionarios` (`idFuncionarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Trabalha_Projetos1`
+    FOREIGN KEY (`Projetos_idProjetos` , `Projetos_Engenheiros_idEngenheiros`)
+    REFERENCES `list_1_ej_7`.`Projetos` (`idProjetos` , `Engenheiros_idEngenheiros`));

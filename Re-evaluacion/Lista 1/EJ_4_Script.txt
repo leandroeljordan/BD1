@@ -1,0 +1,19 @@
+EJ_4_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_4` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_4` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_4`.`Jogadores` (
+  `idJogadores` INT NOT NULL auto_increment,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idJogadores`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_4`.`Times` (
+  `idTimes` INT NOT NULL auto_increment,
+  `Nome_equipe` VARCHAR(45) NOT NULL,
+  `Jogadores_idJogadores` INT NOT NULL,
+  PRIMARY KEY (`idTimes`, `Jogadores_idJogadores`),
+  INDEX `fk_Times_Jogadores_idx` (`Jogadores_idJogadores` ASC) VISIBLE,
+  CONSTRAINT `fk_Times_Jogadores`
+    FOREIGN KEY (`Jogadores_idJogadores`)
+    REFERENCES `list_1_ej_4`.`Jogadores` (`idJogadores`));

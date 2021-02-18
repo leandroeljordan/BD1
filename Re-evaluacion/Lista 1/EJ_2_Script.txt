@@ -1,0 +1,12 @@
+EJ_2_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_2` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_2` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_2`.`Directores` (
+  `idDirectores` INT NOT NULL,
+  `Departamento_Name` VARCHAR(45) NULL,
+  `Nombre_director` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idDirectores`),
+  UNIQUE INDEX `idDirectores_UNIQUE` (`idDirectores` ASC) VISIBLE,
+  UNIQUE INDEX `Departamento_Name_UNIQUE` (`Departamento_Name` ASC) VISIBLE);

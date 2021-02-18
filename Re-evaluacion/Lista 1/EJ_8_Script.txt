@@ -1,0 +1,92 @@
+EJ_8_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_8` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_8` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Empregados` (
+  `idEmpregados` INT NOT NULL AUTO_INCREMENT,
+  `Empregado_Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idEmpregados`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Departamentos` (
+  `Numero` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Numero`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Gerencia` (
+  `idGerencia` INT NOT NULL AUTO_INCREMENT,
+  `data_inicio` DATE NOT NULL,
+  `data_fin` DATE NOT NULL,
+  `Empregados_idEmpregados` INT NOT NULL,
+  `Departamentos_Numero` INT NOT NULL,
+  PRIMARY KEY (`idGerencia`),
+  INDEX `fk_Gerencia_Empregados_idx` (`Empregados_idEmpregados` ASC) VISIBLE,
+  INDEX `fk_Gerencia_Departamentos1_idx` (`Departamentos_Numero` ASC) VISIBLE,
+  CONSTRAINT `fk_Gerencia_Empregados`
+    FOREIGN KEY (`Empregados_idEmpregados`)
+    REFERENCES `list_1_ej_8`.`Empregados` (`idEmpregados`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Gerencia_Departamentos1`
+    FOREIGN KEY (`Departamentos_Numero`)
+    REFERENCES `list_1_ej_8`.`Departamentos` (`Numero`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Pais` (
+  `idPais` INT NOT NULL AUTO_INCREMENT,
+  `Paiscol` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idPais`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Estado` (
+  `idEstado` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Pais_idPais` INT NOT NULL,
+  PRIMARY KEY (`idEstado`, `Pais_idPais`),
+  UNIQUE INDEX `Nome_UNIQUE` (`Nome` ASC) VISIBLE,
+  INDEX `fk_Estado_Pais1_idx` (`Pais_idPais` ASC) VISIBLE,
+  CONSTRAINT `fk_Estado_Pais1`
+    FOREIGN KEY (`Pais_idPais`)
+    REFERENCES `list_1_ej_8`.`Pais` (`idPais`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Cidade` (
+  `idCidade` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Estado_idEstado` INT NOT NULL,
+  `Estado_Pais_idPais` INT NOT NULL,
+  PRIMARY KEY (`idCidade`, `Estado_idEstado`, `Estado_Pais_idPais`),
+  UNIQUE INDEX `Nome_UNIQUE` (`Nome` ASC) VISIBLE,
+  INDEX `fk_Cidade_Estado1_idx` (`Estado_idEstado` ASC, `Estado_Pais_idPais` ASC) VISIBLE,
+  CONSTRAINT `fk_Cidade_Estado1`
+    FOREIGN KEY (`Estado_idEstado` , `Estado_Pais_idPais`)
+    REFERENCES `list_1_ej_8`.`Estado` (`idEstado` , `Pais_idPais`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Localizacoes` (
+  `idLocalizacoes` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Cidade_idCidade` INT NOT NULL,
+  `Cidade_Estado_idEstado` INT NOT NULL,
+  `Cidade_Estado_Pais_idPais` INT NOT NULL,
+  PRIMARY KEY (`idLocalizacoes`, `Cidade_idCidade`, `Cidade_Estado_idEstado`, `Cidade_Estado_Pais_idPais`),
+  INDEX `fk_Localizacoes_Cidade1_idx` (`Cidade_idCidade` ASC, `Cidade_Estado_idEstado` ASC, `Cidade_Estado_Pais_idPais` ASC) VISIBLE,
+  CONSTRAINT `fk_Localizacoes_Cidade1`
+    FOREIGN KEY (`Cidade_idCidade` , `Cidade_Estado_idEstado` , `Cidade_Estado_Pais_idPais`)
+    REFERENCES `list_1_ej_8`.`Cidade` (`idCidade` , `Estado_idEstado` , `Estado_Pais_idPais`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_8`.`Dep_Local` (
+  `idDep_Local` INT NOT NULL,
+  `Localizacoes_idLocalizacoes` INT NOT NULL,
+  `Departamentos_Numero` INT NOT NULL,
+  PRIMARY KEY (`idDep_Local`, `Localizacoes_idLocalizacoes`),
+  INDEX `fk_Dep_Local_Localizacoes1_idx` (`Localizacoes_idLocalizacoes` ASC) VISIBLE,
+  INDEX `fk_Dep_Local_Departamentos1_idx` (`Departamentos_Numero` ASC) VISIBLE,
+  CONSTRAINT `fk_Dep_Local_Localizacoes1`
+    FOREIGN KEY (`Localizacoes_idLocalizacoes`)
+    REFERENCES `list_1_ej_8`.`Localizacoes` (`idLocalizacoes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Dep_Local_Departamentos1`
+    FOREIGN KEY (`Departamentos_Numero`)
+    REFERENCES `list_1_ej_8`.`Departamentos` (`Numero`));

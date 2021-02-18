@@ -1,0 +1,101 @@
+EJ_9_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_9` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_9` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Marcas` (
+  `idMarcas` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idMarcas`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Aviones` (
+  `Matricula` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Lugar` VARCHAR(45) NOT NULL,
+  `Autonomia` INT NOT NULL,
+  `Marcas_idMarcas` INT NOT NULL,
+  PRIMARY KEY (`Matricula`, `Marcas_idMarcas`),
+  INDEX `fk_Aviones_Marcas1_idx` (`Marcas_idMarcas` ASC) VISIBLE,
+  CONSTRAINT `fk_Aviones_Marcas1`
+    FOREIGN KEY (`Marcas_idMarcas`)
+    REFERENCES `list_1_ej_9`.`Marcas` (`idMarcas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Pais` (
+  `idPais` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idPais`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Estado` (
+  `idEstado` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Pais_idPais` INT NOT NULL,
+  PRIMARY KEY (`idEstado`, `Pais_idPais`),
+  INDEX `fk_Estado_Pais_idx` (`Pais_idPais` ASC) VISIBLE,
+  CONSTRAINT `fk_Estado_Pais`
+    FOREIGN KEY (`Pais_idPais`)
+    REFERENCES `list_1_ej_9`.`Pais` (`idPais`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Ciudad` (
+  `idCiudad` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Estado_idEstado` INT NOT NULL,
+  `Estado_Pais_idPais` INT NOT NULL,
+  PRIMARY KEY (`idCiudad`, `Estado_idEstado`, `Estado_Pais_idPais`),
+  INDEX `fk_Ciudad_Estado1_idx` (`Estado_idEstado` ASC, `Estado_Pais_idPais` ASC) VISIBLE,
+  CONSTRAINT `fk_Ciudad_Estado1`
+    FOREIGN KEY (`Estado_idEstado` , `Estado_Pais_idPais`)
+    REFERENCES `list_1_ej_9`.`Estado` (`idEstado` , `Pais_idPais`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Pilotos` (
+  `idPilotos` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idPilotos`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_9`.`Vuelos` (
+  `idVuelos` INT NOT NULL AUTO_INCREMENT,
+  `Hora` DATETIME NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `Ciudad_idCiudad_Origen` INT NOT NULL,
+  `Ciudad_Estado_idEstado_Origen` INT NOT NULL,
+  `Ciudad_Estado_Pais_idPais_Origen` INT NOT NULL,
+  `Aviones_Matricula` INT NOT NULL,
+  `Aviones_Marcas_idMarcas` INT NOT NULL,
+  `Pilotos_idPilotos` INT NOT NULL,
+  `Ciudad_idCiudad_Destino` INT NOT NULL,
+  `Ciudad_Estado_idEstado_Destino` INT NOT NULL,
+  `Ciudad_Estado_Pais_idPais_Destino` INT NOT NULL,
+  PRIMARY KEY (`idVuelos`, `Ciudad_idCiudad_Origen`, `Ciudad_Estado_idEstado_Origen`, `Ciudad_Estado_Pais_idPais_Origen`, `Aviones_Matricula`, `Aviones_Marcas_idMarcas`, `Pilotos_idPilotos`, `Ciudad_idCiudad_Destino`, `Ciudad_Estado_idEstado_Destino`, `Ciudad_Estado_Pais_idPais_Destino`),
+  INDEX `fk_Vuelos_Ciudad1_idx` (`Ciudad_idCiudad_Origen` ASC, `Ciudad_Estado_idEstado_Origen` ASC, `Ciudad_Estado_Pais_idPais_Origen` ASC) VISIBLE,
+  INDEX `fk_Vuelos_Aviones1_idx` (`Aviones_Matricula` ASC, `Aviones_Marcas_idMarcas` ASC) VISIBLE,
+  INDEX `fk_Vuelos_Pilotos1_idx` (`Pilotos_idPilotos` ASC) VISIBLE,
+  INDEX `fk_Vuelos_Ciudad2_idx` (`Ciudad_idCiudad_Destino` ASC, `Ciudad_Estado_idEstado_Destino` ASC, `Ciudad_Estado_Pais_idPais_Destino` ASC) VISIBLE,
+  CONSTRAINT `fk_Vuelos_Ciudad1`
+    FOREIGN KEY (`Ciudad_idCiudad_Origen` , `Ciudad_Estado_idEstado_Origen` , `Ciudad_Estado_Pais_idPais_Origen`)
+    REFERENCES `list_1_ej_9`.`Ciudad` (`idCiudad` , `Estado_idEstado` , `Estado_Pais_idPais`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Vuelos_Aviones1`
+    FOREIGN KEY (`Aviones_Matricula` , `Aviones_Marcas_idMarcas`)
+    REFERENCES `list_1_ej_9`.`Aviones` (`Matricula` , `Marcas_idMarcas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Vuelos_Pilotos1`
+    FOREIGN KEY (`Pilotos_idPilotos`)
+    REFERENCES `list_1_ej_9`.`Pilotos` (`idPilotos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Vuelos_Ciudad2`
+    FOREIGN KEY (`Ciudad_idCiudad_Destino` , `Ciudad_Estado_idEstado_Destino` , `Ciudad_Estado_Pais_idPais_Destino`)
+    REFERENCES `list_1_ej_9`.`Ciudad` (`idCiudad` , `Estado_idEstado` , `Estado_Pais_idPais`));

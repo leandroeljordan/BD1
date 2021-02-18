@@ -1,0 +1,104 @@
+EJ_10_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_10` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_10` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Almacen` (
+  `idAlmacen` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `direccion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idAlmacen`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`E_Stock` (
+  `idE_Stock` INT NOT NULL AUTO_INCREMENT,
+  `Cantidad` VARCHAR(45) NOT NULL,
+  `Almacen_idAlmacen` INT NOT NULL,
+  PRIMARY KEY (`idE_Stock`, `Almacen_idAlmacen`),
+  INDEX `fk_E_Stock_Almacen1_idx` (`Almacen_idAlmacen` ASC) VISIBLE,
+  CONSTRAINT `fk_E_Stock_Almacen1`
+    FOREIGN KEY (`Almacen_idAlmacen`)
+    REFERENCES `list_1_ej_10`.`Almacen` (`idAlmacen`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Fornecedor_Tipo` (
+  `idFornecedor_Tipo` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idFornecedor_Tipo`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Formas_Pago` (
+  `idFormas_Pago` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idFormas_Pago`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Fornecedor` (
+  `idFornecedor` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Numero_contribuinte` VARCHAR(45) NOT NULL,
+  `Endereco` VARCHAR(45) NOT NULL,
+  `Fornecedor_Tipo_idFornecedor_Tipo` INT NOT NULL,
+  `Formas_Pago_idFormas_Pago` INT NOT NULL,
+  PRIMARY KEY (`idFornecedor`, `Fornecedor_Tipo_idFornecedor_Tipo`, `Formas_Pago_idFormas_Pago`),
+  INDEX `fk_Fornecedor_Fornecedor_Tipo1_idx` (`Fornecedor_Tipo_idFornecedor_Tipo` ASC) VISIBLE,
+  INDEX `fk_Fornecedor_Formas_Pago1_idx` (`Formas_Pago_idFormas_Pago` ASC) VISIBLE,
+  CONSTRAINT `fk_Fornecedor_Fornecedor_Tipo1`
+    FOREIGN KEY (`Fornecedor_Tipo_idFornecedor_Tipo`)
+    REFERENCES `list_1_ej_10`.`Fornecedor_Tipo` (`idFornecedor_Tipo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Fornecedor_Formas_Pago1`
+    FOREIGN KEY (`Formas_Pago_idFormas_Pago`)
+    REFERENCES `list_1_ej_10`.`Formas_Pago` (`idFormas_Pago`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Compra` (
+  `idCompra` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NOT NULL,
+  `Encomienda_descripcion` VARCHAR(100) NOT NULL,
+  `Fornecedor_idFornecedor` INT NOT NULL,
+  `Fornecedor_Fornecedor_Tipo_idFornecedor_Tipo` INT NOT NULL,
+  `Fornecedor_Formas_Pago_idFormas_Pago` INT NOT NULL,
+  PRIMARY KEY (`idCompra`, `Fornecedor_idFornecedor`, `Fornecedor_Fornecedor_Tipo_idFornecedor_Tipo`, `Fornecedor_Formas_Pago_idFormas_Pago`),
+  INDEX `fk_Compra_Fornecedor1_idx` (`Fornecedor_idFornecedor` ASC, `Fornecedor_Fornecedor_Tipo_idFornecedor_Tipo` ASC, `Fornecedor_Formas_Pago_idFormas_Pago` ASC) VISIBLE,
+  CONSTRAINT `fk_Compra_Fornecedor1`
+    FOREIGN KEY (`Fornecedor_idFornecedor` , `Fornecedor_Fornecedor_Tipo_idFornecedor_Tipo` , `Fornecedor_Formas_Pago_idFormas_Pago`)
+    REFERENCES `list_1_ej_10`.`Fornecedor` (`idFornecedor` , `Fornecedor_Tipo_idFornecedor_Tipo` , `Formas_Pago_idFormas_Pago`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Compra_Productos` (
+  `Secuencia` INT NOT NULL,
+  `cantidad` VARCHAR(45) NOT NULL,
+  `Compra_idCompra` INT NOT NULL,
+  PRIMARY KEY (`Secuencia`, `Compra_idCompra`),
+  INDEX `fk_Compra_Productos_Compra1_idx` (`Compra_idCompra` ASC) VISIBLE,
+  CONSTRAINT `fk_Compra_Productos_Compra1`
+    FOREIGN KEY (`Compra_idCompra`)
+    REFERENCES `list_1_ej_10`.`Compra` (`idCompra`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_10`.`Producto` (
+  `idProducto` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Precio` VARCHAR(45) NOT NULL,
+  `Compra_Productos_Secuencia` INT NOT NULL,
+  `Compra_Productos_Compra_idCompra` INT NOT NULL,
+  `E_Stock_idE_Stock` INT NOT NULL,
+  `E_Stock_Almacen_idAlmacen` INT NOT NULL,
+  PRIMARY KEY (`idProducto`),
+  INDEX `fk_Producto_Compra_Productos1_idx` (`Compra_Productos_Secuencia` ASC, `Compra_Productos_Compra_idCompra` ASC) VISIBLE,
+  INDEX `fk_Producto_E_Stock1_idx` (`E_Stock_idE_Stock` ASC, `E_Stock_Almacen_idAlmacen` ASC) VISIBLE,
+  CONSTRAINT `fk_Producto_Compra_Productos1`
+    FOREIGN KEY (`Compra_Productos_Secuencia` , `Compra_Productos_Compra_idCompra`)
+    REFERENCES `list_1_ej_10`.`Compra_Productos` (`Secuencia` , `Compra_idCompra`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Producto_E_Stock1`
+    FOREIGN KEY (`E_Stock_idE_Stock` , `E_Stock_Almacen_idAlmacen`)
+    REFERENCES `list_1_ej_10`.`E_Stock` (`idE_Stock` , `Almacen_idAlmacen`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

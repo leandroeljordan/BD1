@@ -1,0 +1,204 @@
+EJ_2_Ej_4_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_2_ej_4` DEFAULT CHARACTER SET utf8 ;
+USE `list_2_ej_4` ;
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Cliente` (
+  `idCliente` INT NOT NULL AUTO_INCREMENT,
+  `Data_habilitacao` DATE NOT NULL,
+  PRIMARY KEY (`idCliente`));
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Persona_Juridica` (
+  `Cliente_idCliente` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `CGC` INT NOT NULL,
+  `IE` INT NOT NULL,
+  `Direccion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Cliente_idCliente`),
+  CONSTRAINT `fk_Persona_Juridica_Cliente1`
+    FOREIGN KEY (`Cliente_idCliente`)
+    REFERENCES `list_2_ej_4`.`Cliente` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Historico_PJ` (
+  `idHistorico` INT NOT NULL,
+  `fecha` DATE NOT NULL,
+  `Persona_Juridica_Cliente_idCliente` INT NOT NULL,
+  PRIMARY KEY (`idHistorico`, `Persona_Juridica_Cliente_idCliente`),
+  INDEX `fk_Historico_PJ_Persona_Juridica1_idx` (`Persona_Juridica_Cliente_idCliente` ASC) VISIBLE,
+  CONSTRAINT `fk_Historico_PJ_Persona_Juridica1`
+    FOREIGN KEY (`Persona_Juridica_Cliente_idCliente`)
+    REFERENCES `list_2_ej_4`.`Persona_Juridica` (`Cliente_idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Persona_Fisica` (
+  `Cliente_idCliente` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Sexo` TINYINT NOT NULL,
+  `fecha_nacimiento` DATE NOT NULL,
+  `Direccion` VARCHAR(45) NOT NULL,
+  `CIC` INT NOT NULL,
+  PRIMARY KEY (`Cliente_idCliente`),
+  CONSTRAINT `fk_Persona_Fisica_Cliente`
+    FOREIGN KEY (`Cliente_idCliente`)
+    REFERENCES `list_2_ej_4`.`Cliente` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Tipo` (
+  `idTipo` INT NOT NULL,
+  `nombre_tipo` VARCHAR(45) NOT NULL,
+  `tamaño` INT NOT NULL,
+  `n_pasajeros` INT NOT NULL,
+  `n_puertas` INT NOT NULL,
+  `ar-condicionado` BINARY NOT NULL,
+  `toca-fitas` BINARY NOT NULL,
+  `CD` BINARY NOT NULL,
+  `D_hidraulica` BINARY NOT NULL,
+  `Cambio_automatico` BINARY NOT NULL,
+  `radio` BINARY NOT NULL,
+  `Tiempo_limpieza` INT NOT NULL,
+  `KM_revision` INT NOT NULL,
+  PRIMARY KEY (`idTipo`));
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Vehiculos` (
+  `id_vehiculos` INT NOT NULL AUTO_INCREMENT,
+  `Placa` VARCHAR(45) NOT NULL,
+  `Disponible` BINARY NOT NULL,
+  `KM_actual` INT NOT NULL,
+  `Km_medio_diario` FLOAT NOT NULL,
+  `Tipo_idTipo` INT NOT NULL,
+  PRIMARY KEY (`id_vehiculos`),
+  UNIQUE INDEX `Placa_UNIQUE` (`Placa` ASC) VISIBLE,
+  INDEX `fk_Vehiculos_Tipo1_idx` (`Tipo_idTipo` ASC) VISIBLE,
+  CONSTRAINT `fk_Vehiculos_Tipo1`
+    FOREIGN KEY (`Tipo_idTipo`)
+    REFERENCES `list_2_ej_4`.`Tipo` (`idTipo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Filiales` (
+  `idFiliales` INT NOT NULL AUTO_INCREMENT,
+  `Direccion` VARCHAR(45) NOT NULL,
+  `Vehiculos_id_vehiculos` INT NOT NULL,
+  PRIMARY KEY (`idFiliales`),
+  INDEX `fk_Filiales_Vehiculos1_idx` (`Vehiculos_id_vehiculos` ASC) VISIBLE,
+  CONSTRAINT `fk_Filiales_Vehiculos1`
+    FOREIGN KEY (`Vehiculos_id_vehiculos`)
+    REFERENCES `list_2_ej_4`.`Vehiculos` (`id_vehiculos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Alquila` (
+  `idAlquila` INT NOT NULL AUTO_INCREMENT,
+  `Vehiculos_id_vehiculos` INT NOT NULL,
+  `Filiales_idFiliales_Origen` INT NOT NULL,
+  `Filiales_idFiliales_Destino` INT NOT NULL,
+  `Persona_Juridica_Cliente_idCliente` INT NOT NULL,
+  `Persona_Fisica_Cliente_idCliente` INT NOT NULL,
+  PRIMARY KEY (`idAlquila`),
+  INDEX `fk_Alquila_Vehiculos1_idx` (`Vehiculos_id_vehiculos` ASC) VISIBLE,
+  INDEX `fk_Alquila_Filiales1_idx` (`Filiales_idFiliales_Origen` ASC) VISIBLE,
+  INDEX `fk_Alquila_Filiales2_idx` (`Filiales_idFiliales_Destino` ASC) VISIBLE,
+  INDEX `fk_Alquila_Persona_Juridica1_idx` (`Persona_Juridica_Cliente_idCliente` ASC) VISIBLE,
+  INDEX `fk_Alquila_Persona_Fisica1_idx` (`Persona_Fisica_Cliente_idCliente` ASC) VISIBLE,
+  CONSTRAINT `fk_Alquila_Vehiculos1`
+    FOREIGN KEY (`Vehiculos_id_vehiculos`)
+    REFERENCES `list_2_ej_4`.`Vehiculos` (`id_vehiculos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Alquila_Filiales1`
+    FOREIGN KEY (`Filiales_idFiliales_Origen`)
+    REFERENCES `list_2_ej_4`.`Filiales` (`idFiliales`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Alquila_Filiales2`
+    FOREIGN KEY (`Filiales_idFiliales_Destino`)
+    REFERENCES `list_2_ej_4`.`Filiales` (`idFiliales`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Alquila_Persona_Juridica1`
+    FOREIGN KEY (`Persona_Juridica_Cliente_idCliente`)
+    REFERENCES `list_2_ej_4`.`Persona_Juridica` (`Cliente_idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Alquila_Persona_Fisica1`
+    FOREIGN KEY (`Persona_Fisica_Cliente_idCliente`)
+    REFERENCES `list_2_ej_4`.`Persona_Fisica` (`Cliente_idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Automoviles` (
+  `n_Chasis` INT NOT NULL,
+  `n_motor` INT NOT NULL,
+  `Color` VARCHAR(45) NOT NULL,
+  `Marca` VARCHAR(45) NOT NULL,
+  `Modelo` VARCHAR(45) NOT NULL,
+  `Vehiculos_id_vehiculos` INT NOT NULL,
+  UNIQUE INDEX `n_Chasis_UNIQUE` (`n_Chasis` ASC) VISIBLE,
+  UNIQUE INDEX `n_motor_UNIQUE` (`n_motor` ASC) VISIBLE,
+  PRIMARY KEY (`Vehiculos_id_vehiculos`),
+  CONSTRAINT `fk_Automoviles_Vehiculos1`
+    FOREIGN KEY (`Vehiculos_id_vehiculos`)
+    REFERENCES `list_2_ej_4`.`Vehiculos` (`id_vehiculos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Tabla_Revision` (
+  `idTabla_Revision` INT NOT NULL,
+  `Vehiculos_id_vehiculos` INT NOT NULL,
+  `Vehiculos_Tipo_idTipo` INT NOT NULL,
+  PRIMARY KEY (`idTabla_Revision`),
+  INDEX `fk_Tabla_Revision_Vehiculos1_idx` (`Vehiculos_id_vehiculos` ASC, `Vehiculos_Tipo_idTipo` ASC) VISIBLE,
+  CONSTRAINT `fk_Tabla_Revision_Vehiculos1`
+    FOREIGN KEY (`Vehiculos_id_vehiculos`)
+    REFERENCES `list_2_ej_4`.`Vehiculos` (`id_vehiculos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Camioneta_Carga` (
+  `n_chasis` INT NOT NULL,
+  `n_motor` INT NOT NULL,
+  `Cap_carga` INT NOT NULL,
+  `Modelo` VARCHAR(45) NOT NULL,
+  `Marca` VARCHAR(45) NOT NULL,
+  `Tiempo_limpieza` INT NOT NULL,
+  `Vehiculos_id_vehiculos` INT NOT NULL,
+  UNIQUE INDEX `n_chasis_UNIQUE` (`n_chasis` ASC) VISIBLE,
+  UNIQUE INDEX `n_motor_UNIQUE` (`n_motor` ASC) VISIBLE,
+  PRIMARY KEY (`Vehiculos_id_vehiculos`),
+  CONSTRAINT `fk_Camioneta_Carga_Vehiculos1`
+    FOREIGN KEY (`Vehiculos_id_vehiculos`)
+    REFERENCES `list_2_ej_4`.`Vehiculos` (`id_vehiculos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Camionetas_pasajeros` (
+  `n_Chasis` INT NOT NULL,
+  `n_motor` INT NOT NULL,
+  `Color` VARCHAR(45) NOT NULL,
+  `Marca` VARCHAR(45) NOT NULL,
+  `Modelo` VARCHAR(45) NOT NULL,
+  `Vehiculos_id_vehiculos` INT NOT NULL,
+  UNIQUE INDEX `n_Chasis_UNIQUE` (`n_Chasis` ASC) VISIBLE,
+  UNIQUE INDEX `n_motor_UNIQUE` (`n_motor` ASC) VISIBLE,
+  PRIMARY KEY (`Vehiculos_id_vehiculos`),
+  CONSTRAINT `fk_Camionetas_pasajeros_Vehiculos1`
+    FOREIGN KEY (`Vehiculos_id_vehiculos`)
+    REFERENCES `list_2_ej_4`.`Vehiculos` (`id_vehiculos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_4`.`Historico_PF` (
+  `idHistorico` INT NOT NULL,
+  `fecha` DATE NOT NULL,
+  `Persona_Fisica_Cliente_idCliente` INT NOT NULL,
+  PRIMARY KEY (`idHistorico`),
+  INDEX `fk_Historico_PF_Persona_Fisica1_idx` (`Persona_Fisica_Cliente_idCliente` ASC) VISIBLE,
+  CONSTRAINT `fk_Historico_PF_Persona_Fisica1`
+    FOREIGN KEY (`Persona_Fisica_Cliente_idCliente`)
+    REFERENCES `list_2_ej_4`.`Persona_Fisica` (`Cliente_idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

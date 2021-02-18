@@ -1,0 +1,70 @@
+EJ_6_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_6` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_6` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_6`.`Medicos` (
+  `idMedicos` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idMedicos`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_6`.`Pacientes` (
+  `idPacientes` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idPacientes`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_6`.`Consultas` (
+  `idConsultas` INT NOT NULL AUTO_INCREMENT,
+  `Data` VARCHAR(45) NOT NULL,
+  `Diagnostico` VARCHAR(60) NOT NULL,
+  `Medicos_idMedicos` INT NOT NULL,
+  `Pacientes_idPacientes` INT NOT NULL,
+  PRIMARY KEY (`idConsultas`, `Pacientes_idPacientes`),
+  INDEX `fk_Consultas_Medicos_idx` (`Medicos_idMedicos` ASC) VISIBLE,
+  INDEX `fk_Consultas_Pacientes1_idx` (`Pacientes_idPacientes` ASC) VISIBLE,
+  CONSTRAINT `fk_Consultas_Medicos`
+    FOREIGN KEY (`Medicos_idMedicos`)
+    REFERENCES `list_1_ej_6`.`Medicos` (`idMedicos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Consultas_Pacientes1`
+    FOREIGN KEY (`Pacientes_idPacientes`)
+    REFERENCES `list_1_ej_6`.`Pacientes` (`idPacientes`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_6`.`Examenes` (
+  `idExamenes` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idExamenes`));
+
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_6`.`Examen_Consultas` (
+  `idExamen_Consultas` INT NOT NULL AUTO_INCREMENT,
+  `Data` VARCHAR(45) NOT NULL,
+  `Resultado` VARCHAR(45) NOT NULL,
+  `Examenes_idExamenes` INT NOT NULL,
+  PRIMARY KEY (`idExamen_Consultas`, `Examenes_idExamenes`),
+  INDEX `fk_Examen_Consultas_Examenes1_idx` (`Examenes_idExamenes` ASC) VISIBLE,
+  CONSTRAINT `fk_Examen_Consultas_Examenes1`
+    FOREIGN KEY (`Examenes_idExamenes`)
+    REFERENCES `list_1_ej_6`.`Examenes` (`idExamenes`));
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_6`.`Relationship` (
+  `idRelationship` INT NOT NULL AUTO_INCREMENT,
+  `Consultas_idConsultas` INT NOT NULL,
+  `Consultas_Pacientes_idPacientes` INT NOT NULL,
+  `Examen_Consultas_idExamen_Consultas` INT NOT NULL,
+  `Examen_Consultas_Examenes_idExamenes` INT NOT NULL,
+  PRIMARY KEY (`idRelationship`, `Consultas_idConsultas`, `Consultas_Pacientes_idPacientes`, `Examen_Consultas_idExamen_Consultas`, `Examen_Consultas_Examenes_idExamenes`),
+  INDEX `fk_Relationship_Consultas1_idx` (`Consultas_idConsultas` ASC, `Consultas_Pacientes_idPacientes` ASC) VISIBLE,
+  INDEX `fk_Relationship_Examen_Consultas1_idx` (`Examen_Consultas_idExamen_Consultas` ASC, `Examen_Consultas_Examenes_idExamenes` ASC) VISIBLE,
+  CONSTRAINT `fk_Relationship_Consultas1`
+    FOREIGN KEY (`Consultas_idConsultas` , `Consultas_Pacientes_idPacientes`)
+    REFERENCES `list_1_ej_6`.`Consultas` (`idConsultas` , `Pacientes_idPacientes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Relationship_Examen_Consultas1`
+    FOREIGN KEY (`Examen_Consultas_idExamen_Consultas` , `Examen_Consultas_Examenes_idExamenes`)
+    REFERENCES `list_1_ej_6`.`Examen_Consultas` (`idExamen_Consultas` , `Examenes_idExamenes`));

@@ -1,0 +1,20 @@
+EJ_3_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_3` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_3` ;
+CREATE TABLE IF NOT EXISTS `list_1_ej_3`.`Autores` (
+  `idAutores` INT NOT NULL auto_increment,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idAutores`));
+  
+CREATE TABLE IF NOT EXISTS `list_1_ej_3`.`Livros` (
+  `idLivros` INT NOT NULL auto_increment,
+  `Nome_livro` VARCHAR(45) NOT NULL,
+  `Autores_idAutores` INT NOT NULL,
+  PRIMARY KEY (`idLivros`, `Autores_idAutores`),
+  INDEX `fk_Livros_Autores_idx` (`Autores_idAutores` ASC) VISIBLE,
+  CONSTRAINT `fk_Livros_Autores`
+    FOREIGN KEY (`Autores_idAutores`)
+    REFERENCES `list_1_ej_3`.`Autores` (`idAutores`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

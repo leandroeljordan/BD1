@@ -1,0 +1,83 @@
+Lista_2_Ej_1_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_2_ej_1` DEFAULT CHARACTER SET utf8 ;
+USE `list_2_ej_1` ;
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_1`.`User_Perfil` (
+  `idUser_Perfil` INT NOT NULL AUTO_INCREMENT,
+  `User_mail` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idUser_Perfil`),
+  UNIQUE INDEX `User_mail_UNIQUE` (`User_mail` ASC) VISIBLE);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_1`.`Sistemas` (
+  `idSistemas` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Categoria` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idSistemas`),
+  UNIQUE INDEX `Nombre_UNIQUE` (`Nombre` ASC) VISIBLE,
+  UNIQUE INDEX `Categoria_UNIQUE` (`Categoria` ASC) VISIBLE);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_1`.`Modulos` (
+  `idModulos` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Categoria` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idModulos`),
+  UNIQUE INDEX `Nombre_UNIQUE` (`Nombre` ASC) VISIBLE);
+
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_1`.`Sis_Mod` (
+  `idSis_Mod` INT NOT NULL,
+  `Sistemas_idSistemas` INT NOT NULL,
+  `Modulos_idModulos` INT NOT NULL,
+  PRIMARY KEY (`idSis_Mod`, `Sistemas_idSistemas`, `Modulos_idModulos`),
+  INDEX `fk_Sis_Mod_Sistemas1_idx` (`Sistemas_idSistemas` ASC) VISIBLE,
+  INDEX `fk_Sis_Mod_Modulos1_idx` (`Modulos_idModulos` ASC) VISIBLE,
+  CONSTRAINT `fk_Sis_Mod_Sistemas1`
+    FOREIGN KEY (`Sistemas_idSistemas`)
+    REFERENCES `list_2_ej_1`.`Sistemas` (`idSistemas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Sis_Mod_Modulos1`
+    FOREIGN KEY (`Modulos_idModulos`)
+    REFERENCES `list_2_ej_1`.`Modulos` (`idModulos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_1`.`User_Sis` (
+  `idUser_Sis` INT NOT NULL,
+  `User_Perfil_idUser_Perfil` INT NOT NULL,
+  `Sistemas_idSistemas` INT NOT NULL,
+  PRIMARY KEY (`idUser_Sis`),
+  INDEX `fk_User_Sis_User_Perfil_idx` (`User_Perfil_idUser_Perfil` ASC) VISIBLE,
+  INDEX `fk_User_Sis_Sistemas1_idx` (`Sistemas_idSistemas` ASC) VISIBLE,
+  CONSTRAINT `fk_User_Sis_User_Perfil`
+    FOREIGN KEY (`User_Perfil_idUser_Perfil`)
+    REFERENCES `list_2_ej_1`.`User_Perfil` (`idUser_Perfil`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_Sis_Sistemas1`
+    FOREIGN KEY (`Sistemas_idSistemas`)
+    REFERENCES `list_2_ej_1`.`Sistemas` (`idSistemas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_1`.`User_Mod` (
+  `idUser_Mod` INT NOT NULL,
+  `User_Perfil_idUser_Perfil` INT NOT NULL,
+  `Modulos_idModulos` INT NOT NULL,
+  PRIMARY KEY (`idUser_Mod`),
+  INDEX `fk_User_Mod_User_Perfil1_idx` (`User_Perfil_idUser_Perfil` ASC) VISIBLE,
+  INDEX `fk_User_Mod_Modulos1_idx` (`Modulos_idModulos` ASC) VISIBLE,
+  CONSTRAINT `fk_User_Mod_User_Perfil1`
+    FOREIGN KEY (`User_Perfil_idUser_Perfil`)
+    REFERENCES `list_2_ej_1`.`User_Perfil` (`idUser_Perfil`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_Mod_Modulos1`
+    FOREIGN KEY (`Modulos_idModulos`)
+    REFERENCES `list_2_ej_1`.`Modulos` (`idModulos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

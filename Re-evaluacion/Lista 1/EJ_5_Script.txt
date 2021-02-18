@@ -1,0 +1,26 @@
+EJ_5_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_1_ej_5` DEFAULT CHARACTER SET utf8 ;
+USE `list_1_ej_5` ;
+
+CREATE TABLE IF NOT EXISTS `list_1_ej_5`.`Clientes` (
+  `idCliente` INT NOT NULL auto_increment,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `CI` INT(8) NOT NULL,
+  PRIMARY KEY (`idCliente`),
+  UNIQUE INDEX `CI_UNIQUE` (`CI` ASC) VISIBLE,
+  UNIQUE INDEX `idCliente_UNIQUE` (`idCliente` ASC) VISIBLE);
+  
+CREATE TABLE IF NOT EXISTS `list_1_ej_5`.`Encomiendas` (
+  `idEncomiendas` INT NOT NULL auto_increment,
+  `Categoria` VARCHAR(45) NOT NULL,
+  `Destino` VARCHAR(45) NOT NULL,
+  `Origen` VARCHAR(45) NOT NULL,
+  `Clientes_idCliente` INT NOT NULL,
+  PRIMARY KEY (`idEncomiendas`, `Clientes_idCliente`),
+  INDEX `fk_Encomiendas_Clientes_idx` (`Clientes_idCliente` ASC) VISIBLE,
+  CONSTRAINT `fk_Encomiendas_Clientes`
+    FOREIGN KEY (`Clientes_idCliente`)
+    REFERENCES `list_1_ej_5`.`Clientes` (`idCliente`));
+
+  

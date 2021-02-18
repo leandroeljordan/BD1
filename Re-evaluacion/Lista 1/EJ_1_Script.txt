@@ -1,0 +1,71 @@
+Avance BD: EJ1.
+
+
+CREATE SCHEMA IF NOT EXISTS `List_1_Ej_1` DEFAULT CHARACTER SET utf8 ;
+USE `List_1_Ej_1` ;
+
+CREATE TABLE IF NOT EXISTS `List_1_Ej_1`.`Alumnos` (
+  `idAlumnos` INT NOT NULL auto_increment ,
+  `Nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idAlumnos`));
+
+
+CREATE TABLE IF NOT EXISTS `List_1_Ej_1`.`Trabajos` (
+  `idTrabajos` INT NOT NULL auto_increment,
+  `Descripcion` VARCHAR(55) NULL,
+  PRIMARY KEY (`idTrabajos`));
+
+CREATE TABLE IF NOT EXISTS `List_1_Ej_1`.`Realiza` (
+  `id_realiza` INT NOT NULL auto_increment,
+  `Alumnos_idAlumnos` INT NOT NULL,
+  `Trabajos_idTrabajos` INT NOT NULL,
+  PRIMARY KEY (`id_realiza`, `Alumnos_idAlumnos`, `Trabajos_idTrabajos`),
+  INDEX `fk_Realiza_Alumnos_idx` (`Alumnos_idAlumnos` ASC) VISIBLE,
+  INDEX `fk_Realiza_Trabajos1_idx` (`Trabajos_idTrabajos` ASC) VISIBLE,
+  CONSTRAINT `fk_Realiza_Alumnos`
+    FOREIGN KEY (`Alumnos_idAlumnos`)
+    REFERENCES `List_1_Ej_1`.`Alumnos` (`idAlumnos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Realiza_Trabajos1`
+    FOREIGN KEY (`Trabajos_idTrabajos`)
+    REFERENCES `List_1_Ej_1`.`Trabajos` (`idTrabajos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+//Alumnos
+
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Shonda');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Dixom');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Amsox');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Aaodt');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Rzla');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Hcnbr');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Nbrc');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Brianp');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Aczinor');
+INSERT INTO `list_1_ej_1`.`alumnos` (`Nombre`) VALUES ('Acuca');
+
+//Trabajos
+
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Spirit Council');
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Lone Council');
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Harmonious Convocation');
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Parallel Council');
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Ice Congregation');
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Council of Glory');
+INSERT INTO `list_1_ej_1`.`trabajos` (`Descripcion`) VALUES ('The Council of the Flawless');
+
+//Realiza
+
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('1', '1');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('2', '1');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('3', '2');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('4', '3');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('5', '5');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('6', '6');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('7', '7');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('8', '6');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('9', '4');
+INSERT INTO `list_1_ej_1`.`realiza` (`Alumnos_idAlumnos`, `Trabajos_idTrabajos`) VALUES ('10', '3');
+

@@ -1,0 +1,76 @@
+Lista_2_Ej_2_Script
+
+CREATE SCHEMA IF NOT EXISTS `list_2_ej_2` DEFAULT CHARACTER SET utf8 ;
+USE `list_2_ej_2` ;
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_2`.`Clientes` (
+  `idClientes` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Apellido` VARCHAR(45) NOT NULL,
+  `Tel` INT NOT NULL,
+  `Direccion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idClientes`));
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_2`.`Filme` (
+  `idFilme` INT NOT NULL AUTO_INCREMENT,
+  `Titulo` VARCHAR(45) NOT NULL,
+  `Categoria` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idFilme`));
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_2`.`Fitas` (
+  `idFitas` INT NOT NULL AUTO_INCREMENT,
+  `Filme_idFilme` INT NOT NULL,
+  PRIMARY KEY (`idFitas`, `Filme_idFilme`),
+  INDEX `fk_Fitas_Filme1_idx` (`Filme_idFilme` ASC) VISIBLE,
+  CONSTRAINT `fk_Fitas_Filme1`
+    FOREIGN KEY (`Filme_idFilme`)
+    REFERENCES `list_2_ej_2`.`Filme` (`idFilme`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_2`.`Fit_Client` (
+  `idFit_Client` INT NOT NULL AUTO_INCREMENT,
+  `fecha_inicio` DATE NOT NULL,
+  `fecha_fin` DATE NOT NULL,
+  `hora` DATETIME NOT NULL,
+  `Fitas_idFitas` INT NOT NULL,
+  `Fitas_Filme_idFilme` INT NOT NULL,
+  `Clientes_idClientes` INT NOT NULL,
+  PRIMARY KEY (`idFit_Client`),
+  INDEX `fk_Fit_Client_Fitas1_idx` (`Fitas_idFitas` ASC, `Fitas_Filme_idFilme` ASC) VISIBLE,
+  INDEX `fk_Fit_Client_Clientes1_idx` (`Clientes_idClientes` ASC) VISIBLE,
+  CONSTRAINT `fk_Fit_Client_Fitas1`
+    FOREIGN KEY (`Fitas_idFitas` , `Fitas_Filme_idFilme`)
+    REFERENCES `list_2_ej_2`.`Fitas` (`idFitas` , `Filme_idFilme`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Fit_Client_Clientes1`
+    FOREIGN KEY (`Clientes_idClientes`)
+    REFERENCES `list_2_ej_2`.`Clientes` (`idClientes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_2`.`Actores` (
+  `idActores` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Fecha_nacimiento` VARCHAR(45) NOT NULL,
+  `Estrella` TINYINT NOT NULL,
+  PRIMARY KEY (`idActores`));
+
+CREATE TABLE IF NOT EXISTS `list_2_ej_2`.`Film_Actor` (
+  `idFilm_Actor` INT NOT NULL,
+  `Actores_idActores` INT NOT NULL,
+  `Filme_idFilme` INT NOT NULL,
+  PRIMARY KEY (`idFilm_Actor`, `Actores_idActores`, `Filme_idFilme`),
+  INDEX `fk_Film_Actor_Actores_idx` (`Actores_idActores` ASC) VISIBLE,
+  INDEX `fk_Film_Actor_Filme1_idx` (`Filme_idFilme` ASC) VISIBLE,
+  CONSTRAINT `fk_Film_Actor_Actores`
+    FOREIGN KEY (`Actores_idActores`)
+    REFERENCES `list_2_ej_2`.`Actores` (`idActores`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Film_Actor_Filme1`
+    FOREIGN KEY (`Filme_idFilme`)
+    REFERENCES `list_2_ej_2`.`Filme` (`idFilme`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
