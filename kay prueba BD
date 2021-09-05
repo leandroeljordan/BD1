@@ -1,0 +1,123 @@
+drop database if exists Exe;
+
+create database Exe;
+use Exe;
+
+
+Create table Funcionarios ( 
+id_Funcionarios  int not null auto_increment primary key,
+Nombre varchar(15) not null,
+CI char(8) not null,
+Fecha_de_Ingreso date not null
+); 
+
+Create table Administrador ( 
+id_Administrador int not null,
+Nivel int,
+foreign key (id_Administrador) references Funcionarios (id_Funcionarios) on delete cascade on update cascade
+); 
+
+create table Curso_Admin (
+id_Curso_Admin int not null auto_increment primary key,
+Curso varchar(15),
+id_Administrador int,
+foreign key (id_Administrador) references Administrador (id_Administrador) on delete cascade on update cascade
+);
+
+Create table Gerente ( 
+id_Gerente int not null auto_increment primary key,
+id_Administrador int,
+foreign key (id_Administrador) references Administrador (id_Administrador) on delete cascade on update cascade
+);
+
+create table Mecanico ( 
+id_Mecanico int not null, 
+Horario_de_Trabajo Time not null, 
+foreign key (id_Mecanico) references Funcionarios (id_Funcionarios) on delete cascade on update cascade 
+); 
+
+
+create table Especialidades_M ( 
+id_Especialidades int not null auto_increment primary key, 
+Especialidad varchar(15),
+id_Mecanico int,
+foreign key (id_Mecanico) references Mecanico (id_Mecanico) on delete cascade on update cascade
+);    
+
+Create table Choferes (
+id_Chofer int not null,
+vencimiento_de_la_libreta date not null,
+foreign key (id_Chofer) references Funcionarios (id_Funcionarios) on delete cascade on update cascade
+);
+
+create table Cliente (
+id_Cliente int not null auto_increment primary key, 
+Nombre varchar(15) NOT NULL,
+CI char(8) NOT NULL Unique, 
+Telefono varchar(20)
+); 
+
+Create table Coche ( 
+id_coche int not null auto_increment primary key, 
+Matricula varchar(10) not null,
+Fecha_de_Compra date,
+Origen varchar(15), 
+Numero_De_Coche int not null
+);
+
+Create table Viajes ( 
+id_Viajes int not null auto_increment primary key, 
+Horario time not null, 
+Fecha date not null, 
+Codigo_Origen char(2),
+Codigo_Destino char(2),
+id_chofer int not null,
+id_coche int not null,
+foreign key (id_chofer) references Choferes (id_Chofer) on delete cascade on update cascade,
+foreign key (id_coche) references Coche (id_coche) on delete cascade on update cascade
+);
+
+/*drop table Pasajes;*/
+create table Pasajes ( 
+id_Pasajes int not null auto_increment primary key, 
+Numero_de_asiento int not null, 
+Pago_Reservo bit not null, 
+id_Cliente int not null,
+id_Viajes int not null,
+id_Administrador int not null,
+foreign key (id_Viajes) references Viajes (id_Viajes) on delete cascade on update cascade,
+foreign key (id_Administrador) references  Administrador (id_Administrador) on delete cascade on update cascade,
+foreign key (id_Cliente) references Cliente (id_Cliente) on delete cascade on update cascade
+); 
+
+
+/*INGRESO FUNCIONARIOS*/
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Kayra ', '49769930', '2021-12-3');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Nahuel ', '53727459', '2010-05-06');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Felipe ', '43552693', '2005-08-09');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Sofia ', '34262923', '2006-05-03');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Lucas ', '51924073', '2013-09-03');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Oscar ', '45856324', '2015-06-08');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Milena', '41584896', '2018-05-06');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Venecio ', '21561551', '2019-06-05');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Canela', '18156165', '2020-05-09');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Farruko', '12841854', '2021-08-09');
+
+
+/*INGRESO ADMINISTRADOR*/
+INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`) VALUES ('1', '03');
+INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`) VALUES ('2', '03');
+INSERT INTO `exe`.`administrador` (`id_Administrador`, `Nivel`) VALUES ('6', '03');
+INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`) VALUES ('10', '03');
+
+/*INGRESO MECANICOS*/
+INSERT INTO `exe`.`mecanico` (`id_Mecanico`,`Horario_de_Trabajo`) VALUES ('3', '08:00:00');
+INSERT INTO `exe`.`mecanico` (`id_Mecanico`,`Horario_de_Trabajo`) VALUES ('8', '08:00:00');
+INSERT INTO `exe`.`mecanico` (`id_Mecanico`,`Horario_de_Trabajo`) VALUES ('7', '08:00:00');
+INSERT INTO `exe`.`mecanico` (`id_Mecanico`,`Horario_de_Trabajo`) VALUES ('9', '08:00:00');
+
+/*INGRESOS CHOFERES*/
+INSERT INTO `exe`.`choferes` (`id_Chofer`,`vencimiento_de_la_libreta`) VALUES ('4', '2025-02-15');
+INSERT INTO `exe`.`choferes` (`id_Chofer`,`vencimiento_de_la_libreta`) VALUES ('5', '2035-02-15');
+
+
