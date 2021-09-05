@@ -52,7 +52,7 @@ foreign key (id_Chofer) references Funcionarios (id_Funcionarios) on delete casc
 
 create table Cliente (
 id_Cliente int not null auto_increment primary key, 
-Nombre varchar(15) NOT NULL,
+Nombre varchar(45) NOT NULL,
 CI char(8) NOT NULL Unique, 
 Telefono varchar(20)
 ); 
@@ -102,6 +102,8 @@ INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('M
 INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Venecio ', '21561551', '2019-06-05');
 INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Canela', '18156165', '2020-05-09');
 INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Farruko', '12841854', '2021-08-09');
+INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('Ignacion', '95148961', '2021-08-10');
+
 
 
 /*INGRESO ADMINISTRADOR*/
@@ -119,5 +121,162 @@ INSERT INTO `exe`.`mecanico` (`id_Mecanico`,`Horario_de_Trabajo`) VALUES ('9', '
 /*INGRESOS CHOFERES*/
 INSERT INTO `exe`.`choferes` (`id_Chofer`,`vencimiento_de_la_libreta`) VALUES ('4', '2025-02-15');
 INSERT INTO `exe`.`choferes` (`id_Chofer`,`vencimiento_de_la_libreta`) VALUES ('5', '2035-02-15');
+INSERT INTO `exe`.`choferes` (`id_Chofer`,`vencimiento_de_la_libreta`) VALUES ('11', '2035-02-15');
+
+/*INGRESO CLIENTES*/
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Leandro Jordan', '53727459', '096912508');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Francisco', '78945612', '095847594');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Facundo', '12345678', '098457863');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Jose', '52416378', '123654789');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Elieser', '65498456', '36529874');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Walkiria', '63968524', '25143685');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Everton', '96857423', '69853245');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Miguel', '63529856', '65498732');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Javier', '65897531', '951753456');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Eliena', '96385276', '852963741');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Ignasi Mejias', '5881452', '097328201');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Rita Lin', '1035773', '547107265');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Emiliano Luna', '4002548', '880443292');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Lorenzo Rivero', '1192060', '158916897');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Brian Arteaga', '3564773', '668363176');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Andrea Rico', '2176900', '793283976');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Ada Salguero', '1306427', '706143124');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Jon Lobato', '4808827', '448823616');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Arancha Vico', '4468400', '516581608');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Manolo Lopez', '1043952', '660332117');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Aleix Sosa', '2038442', '272299576');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Salah Lucas', '4601226', '611164046');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Michelle Pozo', '1351142', '685665253');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Daniela Orozco', '4606804', '193481904');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Sonia Peralta', '3544193', '470666100');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Dani Tome', '1442027', '830629866');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Lia Hermoso', '3815014', '271410243');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Laia Mas', '2959561', '325209738');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Juan Pablo Prieto', '5860865', '186660245');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Carles Adan', '3071971', '615133569');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Nina Blanco', '5946893', '776455553');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Youssef Snchez', '1292948', '453658425');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Richard Calle', '3107006', '829088568');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Siham Coronado', '4939555', '201839974');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Luz Vaquero', '2104453', '374214989');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Victorina Barcelo', '1481719', '476105115');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Sara Galiano', '2378372', '462115435');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Gabriela Rebollo', '4743710', '290470044');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Ioana Real', '5029691', '865942035');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Inma Olivera', '1495098', '712660016');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Asier Sosa', '4379475', '956035652');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Souad Serrano', '3431299', '717268357');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Michael Sainz', '4669039', '371399333');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Candida Mari', '1953426', '109637654');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Esmeralda Burgos', '1483880', '594086580');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Rodolfo Torres', '2321223', '662000958');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Nicolae Castilla', '5400175', '645606038');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Olivia Camino', '1731203', '810162480');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Augusto Guijarro', '1435273', '158443582');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Higinio Rosales', '5865646', '262911099');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Naima Alcaide', '5261606', '275567615');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Leonardo Almeida', '5553225', '569001628');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Luisa Bilbao', '4238728', '234672289');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Antonia Farre', '3642499', '471077413');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Baldomero Jaime', '4576749', '920109570');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Anne Infante', '5438179', '220192494');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Paula Revuelta', '3747169', '358017312');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Constantino Vallejo', '5998167', '537467937');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Candelaria Sobrino', '2755324', '729363499');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Bienvenido Sepulveda', '2643880', '910299683');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Roger Pino', '3552888', '165565292');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Jacinto Carrera', '1412529', '581640438');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Bernardo Moreno', '3409616', '843093592');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Andrei Izquierdo', '4671735', '298401127');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Florencio Cabezas', '5991033', '268676665');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Anibal Pulido', '1111650', '251794622');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Mariano Cervera', '2059688', '512184009');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Aina Maya', '2922078', '394431517');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Marta Galiano', '5232630', '167868140');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Remedios Gaspar', '5806906', '401421518');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Gumersindo Garrido', '3128446', '495322654');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Gloria Cruz', '3763732', '869916853');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Gracia Amado', '3189110', '712534826');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Eulogio Tello', '1366212', '578137237');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Anton Llorente', '5828295', '178759339');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Anton Martorell', '4681290', '178759339');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Natividad Checa', '5981730', '498204317');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Edgar Lima', '5911141', '443037899');
+INSERT INTO `exe`.`cliente` (`Nombre`, `CI`, `Telefono`) VALUES ('Maribel Bueno', '3275488', '823368437');
+
+
+/*INGRESO COCHES*/
+INSERT INTO `exe`.`coche` (`Matricula`, `Fecha_de_Compra`, `Origen`, `Numero_De_Coche`) VALUES ('ABC1234', '2000-01-10', 'SP', '1');
+INSERT INTO `exe`.`coche` (`Matricula`, `Fecha_de_Compra`, `Origen`, `Numero_De_Coche`) VALUES ('ABC4567', '2000-01-10', 'SP', '2');
+INSERT INTO `exe`.`coche` (`Matricula`, `Fecha_de_Compra`, `Origen`, `Numero_De_Coche`) VALUES ('BCA1233', '2005-10-20', 'MP', '3');
+INSERT INTO `exe`.`coche` (`Matricula`, `Fecha_de_Compra`, `Origen`, `Numero_De_Coche`) VALUES ('BCB3215', '2005-10-21', 'RS', '4');
+
+
+/*Ingreso de cursos*/
+INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Gestion', '1');
+INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Administracion', '2');
+INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Office 2010', '1');
+INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Base de Datos', '10');
+INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Programacion', '2');
+
+/*Ingreso especialidad Mecanicos*/
+INSERT INTO `exe`.`especialidades_m` (`Especialidad`, `id_Mecanico`) VALUES ('Motor', '3');
+INSERT INTO `exe`.`especialidades_m` (`Especialidad`, `id_Mecanico`) VALUES ('Electronica', '3');
+INSERT INTO `exe`.`especialidades_m` (`Especialidad`, `id_Mecanico`) VALUES ('Aire Acon', '9');
+
+/*INGRESO GERENTES*/
+INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('1');
+INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('2');
+INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('10');
+INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('1');
+
+/*Ingreso viajes*/
+INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('06:00:00', '2021-09-05', 'RM', 'MR', '4', '1');
+INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('12:00:00', '2021-09-05', 'RM', 'MR', '5', '2');
+INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('14:00:00', '2021-09-05', 'RM', 'MR', '11', '3');
+INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('18:00:00', '2021-09-05', 'MR', 'RM', '4', '1');
+INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('22:00:00', '2021-09-05', 'MR', 'RM', '5', '2');
+INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('00:00:00', '2021-09-05', 'MR', 'RM', '11', '4');
+
+
+/*PASAJES INGRESO*/
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('01', b'1', '1', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('02', b'1', '2', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('03', b'1', '3', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('04', b'1', '4', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('05', b'1', '5', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('06', b'1', '6', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('07', b'1', '7', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('08', b'1', '8', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('09', b'1', '9', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('11', b'1', '67', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('10', b'1', '68', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('12', b'1', '69', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('13', b'1', '70', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('14', b'1', '71', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('15', b'1', '72', '1','10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('16', b'1', '73', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('17', b'1', '74', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('18', b'1', '75', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('19', b'1', '76', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('20', b'1', '77', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('21', b'0', '78', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('22', b'0', '79', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('23', b'0', '80', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('24', b'0', '81', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('25', b'0', '82', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('26', b'0', '83', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('27', b'1', '84', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('28', b'0', '85', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('29', b'1', '86', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('30', b'0', '87', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('31', b'1', '88', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('32', b'0', '89', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('33', b'1', '90', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('34', b'0', '91', '1', '1');
+
+
+/**/
+
 
 
