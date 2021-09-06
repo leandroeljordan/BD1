@@ -6,7 +6,7 @@ use Exe;
 
 Create table Funcionarios ( 
 id_Funcionarios  int not null auto_increment primary key,
-Nombre varchar(15) not null,
+Nombre varchar(45) not null,
 CI char(8) not null,
 Fecha_de_Ingreso date not null
 ); 
@@ -17,18 +17,28 @@ Nivel int,
 foreign key (id_Administrador) references Funcionarios (id_Funcionarios) on delete cascade on update cascade
 ); 
 
+create table Cursos (
+id_Curso int not null auto_increment primary key,
+Curso varchar(45)
+);
+
 create table Curso_Admin (
-id_Curso_Admin int not null auto_increment primary key,
-Curso varchar(15),
-id_Administrador int,
+id_Curso int not null,
+id_Administrador int not null,
+foreign key (id_Curso) references Cursos (id_Curso) on delete cascade on update cascade,
 foreign key (id_Administrador) references Administrador (id_Administrador) on delete cascade on update cascade
 );
 
+
 Create table Gerente ( 
-id_Gerente int not null auto_increment primary key,
-id_Administrador int,
-foreign key (id_Administrador) references Administrador (id_Administrador) on delete cascade on update cascade
+id_Gerente int not null,
+foreign key (id_Gerente) references Administrador (id_Administrador) on delete cascade on update cascade
 );
+
+alter table Administrador 
+ADD Gerente int;
+alter table Administrador
+add foreign key (Gerente) references Gerente (id_Gerente);
 
 create table Mecanico ( 
 id_Mecanico int not null, 
@@ -39,10 +49,15 @@ foreign key (id_Mecanico) references Funcionarios (id_Funcionarios) on delete ca
 
 create table Especialidades_M ( 
 id_Especialidades int not null auto_increment primary key, 
-Especialidad varchar(15),
-id_Mecanico int,
-foreign key (id_Mecanico) references Mecanico (id_Mecanico) on delete cascade on update cascade
+Especialidad varchar(45)
 );    
+
+create table Esp_Mecanico (
+id_Mecanico int not null,
+id_Especialidades int not null,
+foreign key (id_Mecanico) references Mecanico (id_Mecanico) on delete cascade on update cascade,
+foreign key (id_Especialidades) references Especialidades_M (id_Especialidades) on delete cascade on update cascade
+);
 
 Create table Choferes (
 id_Chofer int not null,
@@ -108,9 +123,16 @@ INSERT INTO `exe`.`funcionarios` (`Nombre`, `CI`, `Fecha_de_Ingreso`) VALUES ('I
 
 /*INGRESO ADMINISTRADOR*/
 INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`) VALUES ('1', '03');
-INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`) VALUES ('2', '03');
-INSERT INTO `exe`.`administrador` (`id_Administrador`, `Nivel`) VALUES ('6', '03');
-INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`) VALUES ('10', '03');
+INSERT INTO `exe`.`gerente` (`id_Gerente`) VALUES (1);
+
+INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`,`Gerente`) VALUES ('2', '03','1');
+INSERT INTO `exe`.`administrador` (`id_Administrador`, `Nivel`,`Gerente`) VALUES ('6', '03','1');
+INSERT INTO `exe`.`administrador` (`id_Administrador`,`Nivel`,`Gerente`) VALUES ('10', '03','1');
+
+/*INGRESO GERENTES*/
+INSERT INTO `exe`.`gerente` (`id_Gerente`) VALUES ('2');
+INSERT INTO `exe`.`gerente` (`id_Gerente`) VALUES ('10');
+INSERT INTO `exe`.`gerente` (`id_Gerente`) VALUES ('1');
 
 /*INGRESO MECANICOS*/
 INSERT INTO `exe`.`mecanico` (`id_Mecanico`,`Horario_de_Trabajo`) VALUES ('3', '08:00:00');
@@ -213,23 +235,34 @@ INSERT INTO `exe`.`coche` (`Matricula`, `Fecha_de_Compra`, `Origen`, `Numero_De_
 
 
 /*Ingreso de cursos*/
-INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Gestion', '1');
-INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Administracion', '2');
-INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Office 2010', '1');
-INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Base de Datos', '10');
-INSERT INTO `exe`.`curso_admin` (`Curso`, `id_Administrador`) VALUES ('Programacion', '2');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Administracion');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Contabilidad');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Office 2010');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Mercado');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Marketing');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Logistica');
+INSERT INTO `exe`.`cursos` (`Curso`) VALUES ('Informatica');
+
+
+/*RELEACION ADMINISTRADOR CON CURSOS*/
+INSERT INTO `exe`.`curso_admin` (`id_Curso`, `id_Administrador`) VALUES ('7', '1');
+INSERT INTO `exe`.`curso_admin` (`id_Curso`, `id_Administrador`) VALUES ('7', '2');
+INSERT INTO `exe`.`curso_admin` (`id_Curso`, `id_Administrador`) VALUES ('1', '1');
+INSERT INTO `exe`.`curso_admin` (`id_Curso`, `id_Administrador`) VALUES ('3', '10');
+INSERT INTO `exe`.`curso_admin` (`id_Curso`, `id_Administrador`) VALUES ('2', '2');
 
 /*Ingreso especialidad Mecanicos*/
-INSERT INTO `exe`.`especialidades_m` (`Especialidad`, `id_Mecanico`) VALUES ('Motor', '3');
-INSERT INTO `exe`.`especialidades_m` (`Especialidad`, `id_Mecanico`) VALUES ('Electronica', '3');
-INSERT INTO `exe`.`especialidades_m` (`Especialidad`, `id_Mecanico`) VALUES ('Aire Acon', '9');
+INSERT INTO `exe`.`especialidades_m` (`id_Especialidades`, `Especialidad`) VALUES ('1', 'Aire Acondicionado');
+INSERT INTO `exe`.`especialidades_m` (`id_Especialidades`, `Especialidad`) VALUES ('2', 'Motores');
+INSERT INTO `exe`.`especialidades_m` (`id_Especialidades`, `Especialidad`) VALUES ('3', 'Electronica');
 
-/*INGRESO GERENTES*/
-INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('1');
-INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('2');
-INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('10');
-INSERT INTO `exe`.`gerente` (`id_Administrador`) VALUES ('1');
-
+/*RELACION ESPECIALIDADES DE MECANICOS*/
+INSERT INTO `exe`.`esp_mecanico` (`id_Mecanico`, `id_Especialidades`) VALUES ('3', '1');
+INSERT INTO `exe`.`esp_mecanico` (`id_Mecanico`, `id_Especialidades`) VALUES ('8', '1');
+INSERT INTO `exe`.`esp_mecanico` (`id_Mecanico`, `id_Especialidades`) VALUES ('7', '3');
+INSERT INTO `exe`.`esp_mecanico` (`id_Mecanico`, `id_Especialidades`) VALUES ('3', '3');
+INSERT INTO `exe`.`esp_mecanico` (`id_Mecanico`, `id_Especialidades`) VALUES ('3', '2');
+INSERT INTO `exe`.`esp_mecanico` (`id_Mecanico`, `id_Especialidades`) VALUES ('9', '2');
 /*Ingreso viajes*/
 INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('06:00:00', '2021-09-05', 'RM', 'MR', '4', '1');
 INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('12:00:00', '2021-09-05', 'RM', 'MR', '5', '2');
@@ -238,8 +271,8 @@ INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino
 INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('22:00:00', '2021-09-05', 'MR', 'RM', '5', '2');
 INSERT INTO `exe`.`viajes` (`Horario`, `Fecha`, `Codigo_Origen`, `Codigo_Destino`, `id_chofer`, `id_coche`) VALUES ('00:00:00', '2021-09-05', 'MR', 'RM', '11', '4');
 
-
 /*PASAJES INGRESO*/
+
 INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('01', b'1', '1', '1', '1');
 INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('02', b'1', '2', '1', '1');
 INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('03', b'1', '3', '1', '1');
@@ -249,34 +282,32 @@ INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, 
 INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('07', b'1', '7', '1', '1');
 INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('08', b'1', '8', '1', '2');
 INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('09', b'1', '9', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('11', b'1', '67', '1','2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('10', b'1', '68', '1','2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('12', b'1', '69', '1','2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('13', b'1', '70', '1','2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('14', b'1', '71', '1','2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('15', b'1', '72', '1','10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('16', b'1', '73', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('17', b'1', '74', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('18', b'1', '75', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('19', b'1', '76', '1', '1');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('20', b'1', '77', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('21', b'0', '78', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('22', b'0', '79', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('23', b'0', '80', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('24', b'0', '81', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('25', b'0', '82', '1', '10');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('26', b'0', '83', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('27', b'1', '84', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('28', b'0', '85', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('29', b'1', '86', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('30', b'0', '87', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('31', b'1', '88', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('32', b'0', '89', '1', '2');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('33', b'1', '90', '1', '1');
-INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('34', b'0', '91', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('11', b'1', '10', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('10', b'1', '11', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('12', b'1', '12', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('13', b'1', '13', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('14', b'1', '14', '1','2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('15', b'1', '15', '1','10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('16', b'1', '16', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('17', b'1', '17', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('18', b'1', '18', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('19', b'1', '19', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('20', b'1', '20', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('21', b'0', '21', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('22', b'0', '22', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('23', b'0', '23', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('24', b'0', '24', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('25', b'0', '25', '1', '10');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('26', b'0', '26', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('27', b'1', '27', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('28', b'0', '28', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('29', b'1', '29', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('30', b'0', '30', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('31', b'1', '31', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('32', b'0', '32', '1', '2');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('33', b'1', '33', '1', '1');
+INSERT INTO `exe`.`pasajes` (`Numero_de_asiento`, `Pago_Reservo`, `id_Cliente`, `id_Viajes`, `id_Administrador`) VALUES ('34', b'0', '34', '1', '1');
 
 
 /**/
-
-
 
